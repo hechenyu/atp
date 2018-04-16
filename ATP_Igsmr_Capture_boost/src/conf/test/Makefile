@@ -2,10 +2,11 @@
 
 RM = rm -f
 CXX = g++
-CXXFLAGS = -Wall -g 
-INCLUDE = 
-LDFLAGS = -lboost_program_options -lpthread -lrt
+CXXFLAGS = -Wall -g -std=c++98
+INCLUDE = -I..
+LDFLAGS = -lboost_program_options 
 LDPATH =
+VPATH = ..
 
 PROGS =	parse_command_line parse_environment parse_config_file parse_all
 

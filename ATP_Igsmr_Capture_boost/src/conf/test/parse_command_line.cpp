@@ -1,8 +1,5 @@
 #include <vector>
-#include <thread>
-#include <chrono>
 #include <iostream>
-#include <atomic>
 #include <stdint.h>
 #include "config_parser.h"
 #include "config_parser_util.h"
@@ -23,11 +20,7 @@ int main(int argc, char *argv[])
     parser.print_options_description(cout);
     cout << "\n";
 
-    std::map<std::string, std::string> name_map;
-    name_map["IPADDRESS"] = "IPAddress";
-    name_map["PORT"] = "Port";
-
-    parser.parse_environment(name_map);
+    parser.parse_command_line(argc, argv);
 
     cout << "parsed options: \n";
     print_parsed_options(cout, parser);

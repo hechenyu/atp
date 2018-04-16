@@ -2,6 +2,7 @@
 #include <map>
 #include <fstream>
 #include "boost/ref.hpp"
+#include "boost/bind.hpp"
 
 ConfigParser::ConfigParser(const std::string &caption): desc_(caption)
 {
@@ -36,13 +37,12 @@ void ConfigParser::parse_command_line(int argc, const char* const argv[])
             boost::program_options::parse_command_line(argc, argv, desc_), vm_);
 }
 
-void ConfigParser::parse_environment(const std::map<std::string, std::string> &name_map)
-{
+namespace {
     struct NameMapper {
         typedef const std::map<std::string, std::string> map_type;
         boost::reference_wrapper<map_type> name_map_;
         NameMapper(const std::map<std::string, std::string> &name_map): name_map_(boost::cref(name_map)) {}
-        std::string operator ()(const std::string &name) const {
+        std::string find(const std::string &name) const {
             const std::map<std::string, std::string> &name_map = name_map_.get();
             try {
                 return name_map.at(name);
@@ -51,15 +51,20 @@ void ConfigParser::parse_environment(const std::map<std::string, std::string> &n
             }
         }
     };
+}   // namespace 
 
+void ConfigParser::parse_environment(const std::map<std::string, std::string> &name_map)
+{
     NameMapper name_mapper(name_map);
     boost::program_options::store(
-            boost::program_options::parse_environment(desc_, name_mapper), vm_);
+            boost::program_options::parse_environment(desc_, 
+                boost::bind(&NameMapper::find, name_mapper, boost::placeholders::_1)), 
+            vm_);
 }
 
 void ConfigParser::parse_config_file(const std::string &filename)
 {
-    std::ifstream ifs(filename);
+    std::ifstream ifs(filename.c_str());
     boost::program_options::store(
             boost::program_options::parse_config_file(ifs, desc_, true), vm_);
 }

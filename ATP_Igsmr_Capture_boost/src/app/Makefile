@@ -2,16 +2,16 @@
 
 RM = rm -f
 CXX = g++
-CXXFLAGS = -Wall -g
+CXXFLAGS = -Wall -g -DDEBUG
 INCLUDE = -I../common -I../conf -I../net -I../tty
 LDFLAGS = -lboost_program_options -lboost_chrono -lboost_system
 LDPATH = 
 VPATH = ../conf:../common:../tty:../net
 
-OBJS = config_parser.o igsmr_config.o \
-	   error.o wrapsock.o wraptermios.o tty_reader.o igsmr_serial_port.o \
-		collection_data.o \
+OBJS = config_parser.o error.o wrapsock.o wraptermios.o tty_reader.o \
+		collection_data.o igsmr_config.o igsmr_serial_port.o \
 		main.o 
+
 PROGS =	igsmr
 
 .PHONY: all

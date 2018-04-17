@@ -2,6 +2,7 @@
 #include <iostream>
 #endif
 
+#include "igsmr_config.h"
 #include "igsmr_monitor.h"
 
 using namespace std;
@@ -11,8 +12,12 @@ IgsmrMonitor::IgsmrMonitor(unsigned char MTIndex,
 {
     pMT_DTE.reset(new IgsmrSerialPort(DTESerial, MTIndex, IgsmrSerialPort::DTE));
     pMT_DCE.reset(new IgsmrSerialPort(DCESerial, MTIndex, IgsmrSerialPort::DCE));
-}
 
+    IgsmrConfig &config = IgsmrConfig::getInstance();
+    string serv_ip = config.getIPAddress();
+    int serv_port = config.getPort();
+    pUdp.reset(new IgsmrUdpSender(serv_ip, serv_port));
+}
 
 void IgsmrMonitor::run()
 {
@@ -63,10 +68,14 @@ void IgsmrMonitor::run()
 
             if (client[i].revents & POLLIN) {
                 boost::shared_ptr<CollectionData> pdata = tty->readData();
-                (void) pdata;
-                // process data
+                process_data(pdata);
             }
 
         }
     }
+}
+
+void IgsmrMonitor::process_data(boost::shared_ptr<CollectionData> pdata)
+{
+    pUdp->send(*pdata);
 }

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "conf/igsmr_config.h"
+#include "igsmr_config.h"
 
 using namespace std;
 

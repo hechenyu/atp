@@ -3,7 +3,7 @@
 RM = rm -f
 CXX = g++
 CXXFLAGS = -Wall -g
-INCLUDE = -I..
+INCLUDE = -I../common -I../conf -I../net -I../tty
 LDFLAGS = -lboost_program_options 
 LDPATH = 
 VPATH = ../conf:../common

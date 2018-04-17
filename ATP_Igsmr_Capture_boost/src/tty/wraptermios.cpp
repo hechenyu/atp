@@ -1,5 +1,5 @@
 #include "wraptermios.h"
-#include "common/error.h"
+#include "error.h"
 
 #include <fcntl.h>
 

@@ -2,8 +2,8 @@
 #define __igsmr_config_h
 
 #include <string>
-#include "common/singleton.h"
-#include "conf/config_parser.h"
+#include "singleton.h"
+#include "config_parser.h"
 
 class IgsmrConfig {
 private:

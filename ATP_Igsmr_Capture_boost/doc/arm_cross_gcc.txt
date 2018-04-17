@@ -1,0 +1,17 @@
+// arm linux交叉编译环境安装说明(ubuntu16.04验证) 
+// https://download.csdn.net/download/u013454589/10342508
+
+1) 解压安装包
+# tar xzvf gcc-4.6.2-glibc-2.13-linaro-multilib-2011.12.tar.gz
+# sudo mkdir -p /usr/local/arm 
+# sudo mv gcc-4.6.2-glibc-2.13-linaro-multilib-2011.12 /usr/local/arm 
+
+2) export PATH变量
+# vim ~/.bashrc
+增加export PATH=$PATH:/usr/local/arm/gcc-4.6.2-glibc-2.13-linaro-multilib-2011.12/fsl-linaro-toolchain/bin
+
+3) 测试arm-none-linux-gnueabi-c++命令
+# arm-none-linux-gnueabi-c++ -v
+如果报"没有那个文件或目录", 执行下面命令
+# apt-get install lib32ncurses5 lib32z1
+# apt-get install gcc-multilib g++-multilib

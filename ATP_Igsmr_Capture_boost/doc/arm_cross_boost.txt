@@ -1,0 +1,21 @@
+————————编译boost1.58.0————————
+
+#./bootstrap.sh --prefix=/usr/local/arm-boost
+./bootstrap.sh 
+修改生成的project-config.jam文件：
+
+#using gcc : arm : arm-none-linux-gnueabi-gcc ;
+using gcc : arm : arm-linux-gcc ;
+
+option.set prefix : /usr/local/arm-boost ;
+option.set exec-prefix : /usr/local/arm-boost ;
+option.set libdir : /usr/local/arm-boost/lib ;
+option.set includedir : /usr/local/arm-boost/include ;
+
+#./bjam stage --layout=tagged --build-type=complete
+./b2 stage --layout=tagged --build-type=complete
+
+#sudo ./bjam install
+sudo ./b2 install
+如果报错: error: provided command 'arm-linux-gcc' not found
+要改变PATH在sudo会话中的初始值, 打开/etc/sudoers文件, 找到“secure_path”一行. 当值执行sudo命令时, "secure_path"中包含的路径将被当做默认PATH变量使用. 将arm-linux-gcc的路径加到secure_path中.

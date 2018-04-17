@@ -9,7 +9,9 @@ LDPATH =
 VPATH = ../conf:../common:../tty:../net
 
 OBJS = config_parser.o error.o wrapsock.o wraptermios.o tty_reader.o \
+	    wraplib.o udp_sender.o \
 		collection_data.o igsmr_config.o igsmr_serial_port.o \
+		igsmr_net_serializer.o igsmr_udp_sender.o \
 		igsmr_monitor.o igsmr_monitor_app.o \
 		main.o 
 

@@ -21,6 +21,8 @@ private:
 public:
     IgsmrSerialPort(const std::string &dev_name, int mt_index, SourceType data_source);
 
+    const std::string &getDeviceName() const;
+
     boost::shared_ptr<CollectionData> readData(); 
 };
 

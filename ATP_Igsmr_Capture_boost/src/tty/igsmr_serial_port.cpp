@@ -11,6 +11,11 @@ IgsmrSerialPort::IgsmrSerialPort(const std::string &dev_name,
     this->open(dev_name_.c_str());
 }
 
+const std::string &IgsmrSerialPort::getDeviceName() const
+{
+    return dev_name_;
+}
+
 boost::shared_ptr<CollectionData> IgsmrSerialPort::readData()
 {
     boost::shared_ptr<CollectionData> pdata(new CollectionData);

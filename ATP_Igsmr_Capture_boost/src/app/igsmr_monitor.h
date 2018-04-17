@@ -11,6 +11,8 @@ private:
 
 public:
     IgsmrMonitor(unsigned char MTIndex, const std::string &DTESerial, const std::string &DCESerial);
+
+    void run();
 };
 
 #endif

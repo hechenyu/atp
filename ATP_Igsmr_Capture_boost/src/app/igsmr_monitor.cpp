@@ -1,4 +1,10 @@
+#ifdef DEBUG
+#include <iostream>
+#endif
+
 #include "igsmr_monitor.h"
+
+using namespace std;
 
 IgsmrMonitor::IgsmrMonitor(unsigned char MTIndex, 
         const std::string &DTESerial, const std::string &DCESerial)
@@ -15,6 +21,8 @@ void IgsmrMonitor::run()
     readers.push_back(pMT_DCE.get());
 
     TtyReader::Poller poller;
+    poller.watch(readers);
+
     for ( ; ; ) {
         int nready = poller.poll(-1);
 
@@ -42,6 +50,22 @@ void IgsmrMonitor::run()
                     (client[i].revents & POLLHUP) ? "POLLHUP " : "",
                     (client[i].revents & POLLERR) ? "POLLERR " : "");
 #endif
+
+            if (client[i].revents & POLLERR) {
+#ifdef DEBUG
+                cout << "event error of '" << tty->getDeviceName() << "' " << endl;
+#endif
+                // DOTO: 做相关的错误处理
+                poller.unwatch(tty);
+                tty->close();
+                continue;
+            }
+
+            if (client[i].revents & POLLIN) {
+                boost::shared_ptr<CollectionData> pdata = tty->readData();
+                (void) pdata;
+                // process data
+            }
 
         }
     }

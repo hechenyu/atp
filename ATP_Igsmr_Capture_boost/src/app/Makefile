@@ -4,11 +4,11 @@ RM = rm -f
 CXX = g++
 CXXFLAGS = -Wall -g
 INCLUDE = -I../common -I../conf -I../net -I../tty
-LDFLAGS = -lboost_program_options 
+LDFLAGS = -lboost_program_options -lboost_chrono -lboost_system
 LDPATH = 
 VPATH = ../conf:../common
 
-OBJS = config_parser.o igsmr_config.o main.o
+OBJS = config_parser.o igsmr_config.o collection_data.o main.o 
 PROGS =	igsmr
 
 .PHONY: all

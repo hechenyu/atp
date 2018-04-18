@@ -16,6 +16,7 @@ private:
     void init(int argc, char *argv[]);
 
 public:
+    std::string getLogDir();
     std::string getConfigFile();
     std::string getMT1DTESerial();
     std::string getMT1DCESerial();

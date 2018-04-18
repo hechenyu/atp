@@ -5,6 +5,7 @@ IgsmrConfig::IgsmrConfig(): parser_("igsmr")
 {
     parser_.add_option("help,h")
           .add_string_option("ConfigFile,F", "config file")
+          .add_string_option("LogDir", "logging file directory")
           .add_string_option("MT1DTESerial")
           .add_string_option("MT1DCESerial")
           .add_string_option("MT2DTESerial")
@@ -13,6 +14,11 @@ IgsmrConfig::IgsmrConfig(): parser_("igsmr")
           .add_int_option("FileSliceSize", "file size per slice, by bytes")
           .add_string_option("IPAddress", "udp receiver ip")
           .add_int_option("Port", "udp receiver port");
+}
+
+std::string IgsmrConfig::getLogDir()
+{
+    return parser_.get_string_variables("LogDir", ".");
 }
 
 std::string IgsmrConfig::getConfigFile()
@@ -86,11 +92,13 @@ IgsmrConfig &IgsmrConfig::getInstance()
 void IgsmrConfig::print(std::ostream &out)
 {
     out << "ConfigFile: " << getConfigFile() << '\n';
+    out << "LogDir: " << getLogDir() << '\n';
     out << "MT1DTESerial: " << getMT1DTESerial() << '\n';
     out << "MT1DCESerial: " << getMT1DCESerial() << '\n';
     out << "MT2DTESerial: " << getMT2DTESerial() << '\n';
     out << "MT2DCESerial: " << getMT2DCESerial() << '\n';
     out << "IPAddress: " << getIPAddress() << '\n';
     out << "Port: " << getPort() << '\n';
+    out << "FilePrefix: " << getFilePrefix() << '\n';
     out << "FileSliceSize: " << getFileSliceSize() << '\n';
 }

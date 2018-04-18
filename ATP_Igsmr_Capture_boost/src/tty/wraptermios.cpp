@@ -1,3 +1,4 @@
+#include <sys/ioctl.h>
 #include "wraptermios.h"
 #include "error.h"
 
@@ -204,3 +205,60 @@ void Tty_set_timeout(int fd, int min, int sec, int millisec)
     Tcsetattr(fd, TCSANOW, &term);
     Tcflush(fd,TCIOFLUSH);  //设置后flush
 }
+
+namespace {
+
+int
+Ioctl(int fd, int request, void *arg)
+{
+	int		n;
+
+	if ( (n = ioctl(fd, request, arg)) == -1)
+		err_sys("ioctl error");
+	return(n);	/* streamio of I_LIST returns value */
+}
+
+}
+
+int Tty_get_modem_status(int fd)
+{
+	unsigned long serial;
+
+    Ioctl(fd, TIOCMGET, &serial);
+    return serial;
+}
+
+void Tty_set_modem_status(int fd, int serial) 
+{
+    Ioctl(fd, TIOCMSET, &serial);
+}
+
+bool TTY_MODEM_STATUS_CTS(int serial)
+{
+    return (serial & TIOCM_CTS);
+}
+
+bool TTY_MODEM_STATUS_DCD(int serial)
+{
+    return (serial & TIOCM_CD);
+}
+
+bool TTY_MODEM_STATUS_RI(int serial)
+{
+    return (serial & TIOCM_RI);
+}
+
+bool TTY_MODEM_STATUS_DSR(int serial)
+{
+    return (serial & TIOCM_DSR);
+}
+
+void TTY_MODEM_STATUS_DSR(int &serial, bool on)
+{
+    if (on) {
+        serial = serial | TIOCM_DSR;
+    } else {
+        serial = serial & ~TIOCM_DSR;
+    }
+}
+

@@ -2,7 +2,7 @@
 
 RM = rm -f
 CXX = g++
-CXXFLAGS = -Wall -g -DDEBUG
+CXXFLAGS = -Wall -g -DUSE_GLOG -DDEBUG
 INCLUDE = -I../common -I../conf -I../net -I../tty -I../file -I../log
 LDFLAGS = -lboost_program_options -lboost_chrono -lboost_thread -lboost_system -lglog
 LDPATH = 

@@ -9,9 +9,10 @@ LDPATH =
 VPATH = ../../common:../../net:../../tty
 
 OBJS = error.o wraptermios.o wrapsock.o
+
 PROGS =	tty_open tty_open_easy tty_set_speed tty_set_parity tty_set_timeout \
 		tty_read tty_write tty_read_select tty_read_poll tty_read_epoll \
-		tty_read2 tty_read_poll2 
+		tty_read2 tty_read_poll2 tty_set_dsr tty_modem_status
 
 .PHONY: all
 all: $(PROGS)
@@ -58,5 +59,11 @@ tty_read2: tty_read2.o $(OBJS) tty_reader.o
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
 tty_read_poll2: tty_read_poll2.o $(OBJS) tty_reader.o
+	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
+
+tty_set_dsr: tty_set_dsr.o $(OBJS)
+	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
+
+tty_modem_status: tty_modem_status.o $(OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 

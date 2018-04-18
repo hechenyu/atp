@@ -1,6 +1,9 @@
 #include	"error.h"
 
+#ifdef USE_GLOG
 #include    "glog/logging.h"
+#endif
+
 #include	<stdarg.h>		/* ANSI C header file */
 #include    <string>
 
@@ -106,8 +109,9 @@ err_doit(int errnoflag, const char *fmt, va_list ap)
     err_msg = buf;
 	strcat(buf, "\n");
 
+#ifdef USE_GLOG
     LOG(ERROR) << buf;
-#if 0
+#else
     fflush(stdout);		/* in case stdout and stderr are the same */
     fputs(buf, stderr);
     fflush(stderr);

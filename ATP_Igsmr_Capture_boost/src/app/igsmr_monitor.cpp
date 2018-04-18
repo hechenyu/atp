@@ -2,6 +2,7 @@
 #include <iostream>
 #endif
 
+#include <signal.h>
 #include "glog/logging.h"
 #include "boost/thread.hpp"
 #include "boost/lexical_cast.hpp"
@@ -74,6 +75,7 @@ void IgsmrMonitor::run()
                 // DOTO: 做相关的错误处理
                 poller.unwatch(tty);
                 tty->close();
+                kill(getpid(), SIGINT);
                 continue;
             }
 

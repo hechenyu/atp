@@ -2,6 +2,7 @@
 #include <iostream>
 #endif
 
+#include "glog/logging.h"
 #include "wraptermios.h"
 #include "igsmr_serial_port.h"
 
@@ -39,7 +40,12 @@ boost::shared_ptr<CollectionData> IgsmrSerialPort::readData()
 IgsmrSerialPort::Status IgsmrSerialPort::readStatus()
 {
     Status status;
-    int serial = this->getModemStatus();
+    int serial = 0;
+    try {
+        serial = this->getModemStatus();
+    } catch (...) {
+        LOG(ERROR) << "getModemStatus fail";
+    }
     status.CTS = TTY_MODEM_STATUS_CTS(serial);
     status.DCD = TTY_MODEM_STATUS_DCD(serial);
     status.RI = TTY_MODEM_STATUS_RI(serial);

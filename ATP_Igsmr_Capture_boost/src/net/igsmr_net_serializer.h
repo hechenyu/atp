@@ -6,7 +6,7 @@
 #include <utility>
 
 #pragma pack(1)
-struct IgmsrNetStruct {
+struct IgsmrNetStruct {
     uint32_t frame_head;
     uint16_t frame_len;
     uint32_t utc_high;
@@ -20,9 +20,9 @@ struct IgmsrNetStruct {
 };
 #pragma pack()
 
-class IgmsrNetSerializer {
+class IgsmrNetSerializer {
 private:
-    IgmsrNetStruct struct_;
+    IgsmrNetStruct struct_;
 
 public:
     std::pair<void *, int> serialize(const CollectionData &data);

@@ -2,12 +2,13 @@
 #include <iostream>
 #endif
 
+#include "boost/lexical_cast.hpp"
 #include "igsmr_config.h"
 #include "igsmr_monitor.h"
 
 using namespace std;
 
-IgsmrMonitor::IgsmrMonitor(unsigned char MTIndex, 
+IgsmrMonitor::IgsmrMonitor(int MTIndex, 
         const std::string &DTESerial, const std::string &DCESerial)
 {
     pMT_DTE.reset(new IgsmrSerialPort(DTESerial, MTIndex, IgsmrSerialPort::DTE));
@@ -17,6 +18,10 @@ IgsmrMonitor::IgsmrMonitor(unsigned char MTIndex,
     string serv_ip = config.getIPAddress();
     int serv_port = config.getPort();
     pUdp.reset(new IgsmrUdpSender(serv_ip, serv_port));
+
+    string prefix = config.getFilePrefix()+boost::lexical_cast<string>((int)MTIndex)+"_";
+    int slice_size = config.getFileSliceSize();
+    pFile.reset(new IgsmrFileWriter(prefix, "", slice_size)); 
 }
 
 void IgsmrMonitor::run()
@@ -78,4 +83,5 @@ void IgsmrMonitor::run()
 void IgsmrMonitor::process_data(boost::shared_ptr<CollectionData> pdata)
 {
     pUdp->send(*pdata);
+    pFile->write(*pdata);
 }

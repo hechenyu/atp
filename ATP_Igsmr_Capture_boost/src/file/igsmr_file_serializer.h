@@ -6,7 +6,7 @@
 #include <utility>
 
 #pragma pack(1)
-struct IgmsrFileStruct {
+struct IgsmrFileStruct {
     uint32_t utc_high;
     uint32_t utc_low;
     uint8_t mt;
@@ -17,9 +17,9 @@ struct IgmsrFileStruct {
 };
 #pragma pack()
 
-class IgmsrFileSerializer {
+class IgsmrFileSerializer {
 private:
-    IgmsrFileStruct struct_;
+    IgsmrFileStruct struct_;
 
 public:
     std::pair<void *, int> serialize(const CollectionData &data);

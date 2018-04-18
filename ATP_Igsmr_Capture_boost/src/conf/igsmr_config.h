@@ -21,6 +21,7 @@ public:
     std::string getMT1DCESerial();
     std::string getMT2DTESerial();
     std::string getMT2DCESerial();
+    std::string getFilePrefix();
     int getFileSliceSize();
     std::string getIPAddress();
     int getPort();

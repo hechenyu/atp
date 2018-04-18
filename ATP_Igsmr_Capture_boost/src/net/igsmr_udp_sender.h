@@ -10,7 +10,7 @@ private:
     std::string serv_ip_;
     int serv_port_;
     UdpSender udp_;
-    IgmsrNetSerializer serializer_;
+    IgsmrNetSerializer serializer_;
 
 public:
     IgsmrUdpSender(const std::string &serv_ip, int serv_port); 

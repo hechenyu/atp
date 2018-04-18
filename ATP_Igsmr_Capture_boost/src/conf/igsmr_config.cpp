@@ -9,6 +9,7 @@ IgsmrConfig::IgsmrConfig(): parser_("igsmr")
           .add_string_option("MT1DCESerial")
           .add_string_option("MT2DTESerial")
           .add_string_option("MT2DCESerial")
+          .add_string_option("FilePrefix", "file name prefix")
           .add_int_option("FileSliceSize", "file size per slice, by bytes")
           .add_string_option("IPAddress", "udp receiver ip")
           .add_int_option("Port", "udp receiver port");
@@ -43,6 +44,11 @@ int IgsmrConfig::getFileSliceSize()
 {
     const int _10M = 10000000;
     return parser_.get_int_variables("FileSliceSize", _10M);
+}
+
+std::string IgsmrConfig::getFilePrefix()
+{
+    return parser_.get_string_variables("FilePrefix", "/IgsmrRecord/ATP_Igsmr_MT");
 }
 
 std::string IgsmrConfig::getIPAddress()

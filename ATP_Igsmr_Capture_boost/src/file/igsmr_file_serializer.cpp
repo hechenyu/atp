@@ -2,7 +2,7 @@
 #include <arpa/inet.h>
 #include <string.h>
 
-std::pair<void *, int> IgmsrFileSerializer::serialize(const CollectionData &data)
+std::pair<void *, int> IgsmrFileSerializer::serialize(const CollectionData &data)
 {
     memset(&struct_, 0, sizeof (struct_));
 

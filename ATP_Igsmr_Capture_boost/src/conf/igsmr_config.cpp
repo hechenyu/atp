@@ -13,7 +13,8 @@ IgsmrConfig::IgsmrConfig(): parser_("igsmr")
           .add_string_option("FilePrefix", "file name prefix")
           .add_int_option("FileSliceSize", "file size per slice, by bytes")
           .add_string_option("IPAddress", "udp receiver ip")
-          .add_int_option("Port", "udp receiver port");
+          .add_int_option("Port", "udp receiver port")
+          .add_int_option("PollTimeout", "poll timeout(milliseconds)");
 }
 
 std::string IgsmrConfig::getLogDir()
@@ -67,6 +68,11 @@ int IgsmrConfig::getPort()
     return parser_.get_int_variables("Port", 0);
 }
 
+int IgsmrConfig::getPollTimeout()
+{
+    return parser_.get_int_variables("PollTimeout", 300);
+}
+
 void IgsmrConfig::init(int argc, char *argv[])
 {
     parser_.parse_command_line(argc, argv);
@@ -101,4 +107,5 @@ void IgsmrConfig::print(std::ostream &out)
     out << "Port: " << getPort() << '\n';
     out << "FilePrefix: " << getFilePrefix() << '\n';
     out << "FileSliceSize: " << getFileSliceSize() << '\n';
+    out << "PollTimeout: " << getPollTimeout() << '\n';
 }

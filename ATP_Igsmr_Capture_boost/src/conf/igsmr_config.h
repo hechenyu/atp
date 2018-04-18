@@ -26,6 +26,7 @@ public:
     int getFileSliceSize();
     std::string getIPAddress();
     int getPort();
+    int getPollTimeout();
     void print(std::ostream &out);
 
     static void initialize(int argc, char *argv[]);

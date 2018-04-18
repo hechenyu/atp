@@ -9,7 +9,7 @@ LDPATH =
 VPATH = ../conf:../common:../tty:../net:../file:../log
 
 OBJS = config_parser.o error.o wrapsock.o wraptermios.o tty_reader.o \
-	    wrapglog.o wraplib.o udp_sender.o utc_to_string.o auto_timestamp_ofile.o \
+	    wrapsignal.o wrapglog.o wraplib.o udp_sender.o utc_to_string.o auto_timestamp_ofile.o \
 		collection_data.o igsmr_config.o igsmr_serial_port.o \
 		igsmr_net_serializer.o igsmr_udp_sender.o \
 		igsmr_file_serializer.o igsmr_file_writer.o \

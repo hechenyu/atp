@@ -2,6 +2,8 @@
 #include <iostream>
 #endif
 
+#include "glog/logging.h"
+#include "boost/thread.hpp"
 #include "boost/lexical_cast.hpp"
 #include "igsmr_config.h"
 #include "igsmr_monitor.h"
@@ -9,7 +11,8 @@
 using namespace std;
 
 IgsmrMonitor::IgsmrMonitor(int MTIndex, 
-        const std::string &DTESerial, const std::string &DCESerial)
+        const std::string &DTESerial, const std::string &DCESerial):
+    poll_timeout_(-1)
 {
     pMT_DTE.reset(new IgsmrSerialPort(DTESerial, MTIndex, IgsmrSerialPort::DTE));
     pMT_DCE.reset(new IgsmrSerialPort(DCESerial, MTIndex, IgsmrSerialPort::DCE));
@@ -22,6 +25,8 @@ IgsmrMonitor::IgsmrMonitor(int MTIndex,
     string prefix = config.getFilePrefix()+boost::lexical_cast<string>((int)MTIndex)+"_";
     int slice_size = config.getFileSliceSize();
     pFile.reset(new IgsmrFileWriter(prefix, "", slice_size)); 
+
+    poll_timeout_ = config.getPollTimeout();
 }
 
 void IgsmrMonitor::run()
@@ -34,7 +39,9 @@ void IgsmrMonitor::run()
     poller.watch(readers);
 
     for ( ; ; ) {
-        int nready = poller.poll(-1);
+        boost::this_thread::interruption_point();
+
+        int nready = poller.poll(poll_timeout_);
 
         if (nready == 0)
             continue;
@@ -62,9 +69,8 @@ void IgsmrMonitor::run()
 #endif
 
             if (client[i].revents & POLLERR) {
-#ifdef DEBUG
-                cout << "event error of '" << tty->getDeviceName() << "' " << endl;
-#endif
+                LOG(ERROR) << "event error of '" << tty->getDeviceName() << "' " << endl;
+
                 // DOTO: 做相关的错误处理
                 poller.unwatch(tty);
                 tty->close();

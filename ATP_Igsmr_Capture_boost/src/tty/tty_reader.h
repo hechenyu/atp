@@ -25,6 +25,7 @@ public:
     void setTimeout(int min, int sec, int millisec);
 
     int read(char *buffer, int size);
+    int getModemStatus();
 
     int fileno() const;
     bool is_open() const;

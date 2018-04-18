@@ -13,6 +13,13 @@ public:
         DCE = 1,
     };
 
+    struct Status {
+        bool CTS;
+        bool DCD;
+        bool RI;
+        bool DSR;
+    };
+
 private:
     std::string dev_name_;
     int mt_index_;              // MTIndex
@@ -24,6 +31,13 @@ public:
     const std::string &getDeviceName() const;
 
     boost::shared_ptr<CollectionData> readData(); 
+    Status readStatus();
+
+    boost::shared_ptr<CollectionData> makeStatusCommon(uint8_t signalType);
+    boost::shared_ptr<CollectionData> makeStatusCTS(Status status);
+    boost::shared_ptr<CollectionData> makeStatusDCD(Status status);
+    boost::shared_ptr<CollectionData> makeStatusRI(Status status);
+    boost::shared_ptr<CollectionData> makeStatusDSR(Status status);
 };
 
 #endif

@@ -71,6 +71,11 @@ int TtyReader::read(char *buff, int size)
     return ::read(tty_fd_, buff, size);
 }
 
+int TtyReader::getModemStatus()
+{
+    return Tty_get_modem_status(tty_fd_);
+}
+
 int TtyReader::fileno() const
 {
     return tty_fd_;

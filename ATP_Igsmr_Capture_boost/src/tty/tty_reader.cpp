@@ -42,6 +42,12 @@ void TtyReader::close()
     ::close(tty_fd_);
 }
 
+void TtyReader::setRawMode()
+{
+    check_open();
+    Tty_raw(tty_fd_);
+}
+
 void TtyReader::setSpeed(int speed)
 {
     check_open();

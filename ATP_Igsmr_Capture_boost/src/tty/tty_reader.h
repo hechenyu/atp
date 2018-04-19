@@ -19,6 +19,7 @@ public:
     void open(const char *dev, int oflag);
     void close();
 
+    void setRawMode();
     void setSpeed(int speed);
     void setParity(int databits, int stopbits, int parity);
     void setIcanon(int echo, int icanon);

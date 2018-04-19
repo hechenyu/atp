@@ -11,6 +11,7 @@ IgsmrSerialPort::IgsmrSerialPort(const std::string &dev_name,
     dev_name_(dev_name), mt_index_(mt_index), data_source_(data_source)
 {
     this->open(dev_name_.c_str());
+    this->setRawMode();
     this->setSpeed(9600);
     this->setParity(8, 1, 'N');
     this->setIcanon(0, 0);

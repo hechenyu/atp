@@ -10,9 +10,12 @@ LDPATH = -L/usr/local/arm/gcc-4.6.2-glibc-2.13-linaro-multilib-2011.12/fsl-linar
 		 -L/usr/local/arm/gcc-4.6.2-glibc-2.13-linaro-multilib-2011.12/fsl-linaro-toolchain/arm-fsl-linux-gnueabi/multi-libs/armv7-a/default/lib32 \
 		 -L/usr/local/arm-boost/lib
 
-VPATH = ../conf:../common
+VPATH = ../conf:../common:../tty:../net
 
-OBJS = config_parser.o igsmr_config.o collection_data.o main.o
+OBJS = config_parser.o error.o wrapsock.o wraptermios.o tty_reader.o \
+		collection_data.o igsmr_config.o igsmr_serial_port.o \
+		main.o 
+
 PROGS =	igsmr
 
 .PHONY: all

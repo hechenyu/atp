@@ -23,5 +23,5 @@ $(OBJS):%.o:%.cpp
 	$(CXX) -o $@ -c $< $(CXXFLAGS) $(INCLUDE)
 
 igsmr: $(OBJS)
-	$(CXX) -o $@ $^ $(CXXFLAGS) $(LDFLAGS) $(LDPATH)
+	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 

@@ -27,6 +27,7 @@ public:
     std::string getIPAddress();
     int getPort();
     int getPollTimeout();
+    int getDaemonMode();
     void print(std::ostream &out);
 
     static void initialize(int argc, char *argv[]);

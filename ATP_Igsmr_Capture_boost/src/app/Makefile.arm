@@ -4,16 +4,14 @@ RM = rm -f
 CXX = arm-linux-g++
 CXXFLAGS = -Wall -g -static
 INCLUDE = -I../common -I../conf -I../net -I../tty -I/usr/local/arm-boost/include
-LDFLAGS = -static -lboost_program_options -lboost_chrono -lboost_system -lrt
-LDPATH = -L/usr/local/arm/gcc-4.6.2-glibc-2.13-linaro-multilib-2011.12/fsl-linaro-toolchain/bin/ \
-		 -L/usr/local/arm/gcc-4.6.2-glibc-2.13-linaro-multilib-2011.12/fsl-linaro-toolchain/lib/gcc/arm-fsl-linux-gnueabi/4.6.2/ \
-		 -L/usr/local/arm/gcc-4.6.2-glibc-2.13-linaro-multilib-2011.12/fsl-linaro-toolchain/arm-fsl-linux-gnueabi/multi-libs/armv7-a/default/lib32 \
-		 -L/usr/local/arm-boost/lib
+LDFLAGS = -static -lboost_program_options -lboost_chrono -lboost_thread -lboost_system -lrt -lpthread
+LDPATH = -L/usr/local/arm-boost/lib
 
 VPATH = ../conf:../common:../tty:../net
 
 OBJS = config_parser.o error.o wrapsock.o wraptermios.o tty_reader.o \
 		collection_data.o igsmr_config.o igsmr_serial_port.o \
+		igsmr_monitor.o igsmr_monitor_app.o \
 		main.o 
 
 PROGS =	igsmr

@@ -1,7 +1,7 @@
 # Makefile
 
 RM = rm -f
-CXX = g++
+CXX = arm-linux-g++
 CXXFLAGS = -Wall -g -static
 INCLUDE = -I.. -I../../common
 LDFLAGS = 

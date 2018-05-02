@@ -1,22 +1,7 @@
-#include "glog/logging.h"
+#include "dump_data.h"
 #include "igsmr_file_serializer.h"
 #include <arpa/inet.h>
 #include <string.h>
-
-namespace {
-
-void dump_data(const char *data, int length) {
-    std::ostringstream os;
-
-    os << "write data '" << "' " << length << " bytes: " << std::string(data, length) << " hex: ";
-    os << std::hex;
-    for (int i = 0; i < length; i++)
-        os << (int) data[i] << " ";
-
-    LOG(INFO) << os.str();
-}
-
-}   // namespace
 
 std::pair<void *, int> IgsmrFileSerializer::serialize(const CollectionData &data)
 {
@@ -36,7 +21,7 @@ std::pair<void *, int> IgsmrFileSerializer::serialize(const CollectionData &data
     memcpy(struct_.data, data.Data, data_len);
 
 #ifdef DEBUG
-    dump_data((char *) struct_.data, data_len);
+    dump_data("write file", (char *) struct_.data, data_len);
 #endif
 
     return std::pair<void *, int>(&struct_, data_len+17);

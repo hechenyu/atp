@@ -30,6 +30,7 @@ IgsmrSerialPort::IgsmrSerialPort(const std::string &dev_name,
     this->setSpeed(9600);
     this->setParity(8, 1, 'N');
     this->setIcanon(0, 0);
+    this->setTimeout(1, 0, 500);
 }
 
 const std::string &IgsmrSerialPort::getDeviceName() const

@@ -19,6 +19,6 @@ std::pair<void *, int> IgsmrFileSerializer::serialize(const CollectionData &data
     struct_.data_len = data_len;
     memcpy(struct_.data, data.Data, data_len);
 
-    return std::pair<void *, int>(&struct_, data_len+13);
+    return std::pair<void *, int>(&struct_, data_len+17);
 }
 

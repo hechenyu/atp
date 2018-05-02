@@ -1,0 +1,6 @@
+————————编译glog-035————————
+
+# sudo mkdir -p /usr/local/arm-glog
+# ./configure --host=arm-linux --prefix=/usr/local/arm-glog
+# make
+# sudo make install

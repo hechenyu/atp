@@ -1,3 +1,4 @@
+#include "glog/logging.h"
 #include "igsmr_file_serializer.h"
 #include <arpa/inet.h>
 #include <string.h>
@@ -35,7 +36,7 @@ std::pair<void *, int> IgsmrFileSerializer::serialize(const CollectionData &data
     memcpy(struct_.data, data.Data, data_len);
 
 #ifdef DEBUG
-    dump_data(struct_.data, data_len);
+    dump_data((char *) struct_.data, data_len);
 #endif
 
     return std::pair<void *, int>(&struct_, data_len+17);

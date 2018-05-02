@@ -1,7 +1,3 @@
-#ifdef DEBUG
-#include <iostream>
-#endif
-
 #include "glog/logging.h"
 #include "wraptermios.h"
 #include "igsmr_serial_port.h"

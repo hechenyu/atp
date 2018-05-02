@@ -6,6 +6,21 @@
 #include "wraptermios.h"
 #include "igsmr_serial_port.h"
 
+namespace {
+
+void dump_data(const std::string &dev_name, const char *data, int length) {
+    std::ostringstream os;
+
+    os << "read data from '" << dev_name << "' " << length << " bytes: " << std::string(data, length) << " hex: ";
+    os << std::hex;
+    for (int i = 0; i < length; i++)
+        os << (int) data[i] << " ";
+
+    LOG(INFO) << os.str();
+}
+
+}   // namespace
+
 IgsmrSerialPort::IgsmrSerialPort(const std::string &dev_name, 
         int mt_index, SourceType data_source):
     dev_name_(dev_name), mt_index_(mt_index), data_source_(data_source)
@@ -32,7 +47,7 @@ boost::shared_ptr<CollectionData> IgsmrSerialPort::readData()
     pdata->Length = this->read(pdata->Data, MT_BUFFER_LEN);
 
 #ifdef DEBUG
-    std::cout << "read data from '" << dev_name_ << "' " << pdata->Length << " bytes: " << std::string(pdata->Data, pdata->Length) << std::endl;
+    dump_data(dev_name_, pdata->Data, pdata->Length);
 #endif
 
     return pdata;

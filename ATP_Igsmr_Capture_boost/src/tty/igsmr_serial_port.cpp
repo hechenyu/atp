@@ -2,6 +2,7 @@
 #include <iostream>
 #endif
 
+#include <fcntl.h>
 #include "glog/logging.h"
 #include "wraptermios.h"
 #include "igsmr_serial_port.h"
@@ -25,12 +26,11 @@ IgsmrSerialPort::IgsmrSerialPort(const std::string &dev_name,
         int mt_index, SourceType data_source):
     dev_name_(dev_name), mt_index_(mt_index), data_source_(data_source)
 {
-    this->open(dev_name_.c_str());
+    this->open(dev_name_.c_str(), O_RDONLY | O_NOCTTY | O_NONBLOCK);
     this->setRawMode();
     this->setSpeed(9600);
     this->setParity(8, 1, 'N');
     this->setIcanon(0, 0);
-    this->setTimeout(1, 0, 500);
 }
 
 const std::string &IgsmrSerialPort::getDeviceName() const
@@ -45,7 +45,14 @@ boost::shared_ptr<CollectionData> IgsmrSerialPort::readData()
     pdata->MT = mt_index_;
     pdata->DataSource = data_source_;
     pdata->DataType = 1;
-    pdata->Length = this->read(pdata->Data, MT_BUFFER_LEN);
+    pdata->Length = 0;
+
+    while (true) {
+        int length = this->read(pdata->Data+pdata->Length, MT_BUFFER_LEN);
+        if (length == 0 || (length < 0 && errno == EAGAIN))
+            break;
+        pdata->Length += length;
+    } 
 
 #ifdef DEBUG
     dump_data(dev_name_, pdata->Data, pdata->Length);

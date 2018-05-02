@@ -7,12 +7,14 @@
 
 #pragma pack(1)
 struct IgsmrFileStruct {
-    uint32_t utc_high;
-    uint32_t utc_low;
     uint8_t mt;
     uint8_t data_src;
     uint8_t data_type;
-    uint16_t data_len;
+    uint32_t utc_sec;
+    uint16_t utc_millisec;
+    uint16_t time_zone;
+    uint16_t flag;
+    uint32_t data_len;
     uint8_t data[MT_BUFFER_LEN]; 
 };
 #pragma pack()

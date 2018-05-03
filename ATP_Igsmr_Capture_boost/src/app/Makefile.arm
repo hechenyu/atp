@@ -2,7 +2,7 @@
 
 RM = rm -f
 CXX = arm-linux-g++
-CXXFLAGS = -Wall -g -DDEBUG -DUSE_GLOG -static
+CXXFLAGS = -Wall -g -DUSE_GLOG -static
 INCLUDE = -I../common -I../conf -I../net -I../tty -I../file -I../log -I/usr/local/arm-boost/include -I/usr/local/arm-glog/include
 LDFLAGS = -static -lboost_program_options -lboost_chrono -lboost_thread -lboost_system -lglog -lrt -lpthread
 LDPATH = -L/usr/local/arm-boost/lib -L/usr/local/arm-glog/lib

@@ -3,13 +3,17 @@
 
 #include <vector>
 #include <poll.h>
+#include <termios.h>
 
 class TtyReader {
 private:
     int tty_fd_;
+    struct termios term_save;
 
 private:
     void check_open() const;
+    void save_terminfo();
+    void restore_terminfo();
 
 public:
     TtyReader();

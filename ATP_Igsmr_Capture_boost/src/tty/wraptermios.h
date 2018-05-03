@@ -9,6 +9,9 @@ void Tty_set_speed(int fd, int speed);
 void Tty_set_parity(int fd, int databits, int stopbits, int parity);
 void Tty_set_icanon(int fd, int echo, int icanon);
 void Tty_set_timeout(int fd, int min, int sec, int millisec);
+void Tcgetattr(int fd, struct termios *termptr);
+void Tcsetattr(int fd, int opt, const struct termios *termptr);
+void Tcflush(int fd, int queue);
 
 int Tty_get_modem_status(int fd);
 void Tty_set_modem_status(int fd, int serial);

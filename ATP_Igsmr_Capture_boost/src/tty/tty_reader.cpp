@@ -25,6 +25,7 @@ void TtyReader::check_open() const
 void TtyReader::open(const char *dev)
 {
     this->open(dev, O_RDONLY | O_NOCTTY);
+    save_terminfo();
 }
 
 void TtyReader::open(const char *dev, int oflag)
@@ -39,6 +40,7 @@ void TtyReader::close()
 {
     if (is_open())
         return;
+    restore_terminfo();
     ::close(tty_fd_);
 }
 
@@ -90,6 +92,17 @@ int TtyReader::fileno() const
 bool TtyReader::is_open() const
 {
     return tty_fd_ >= 0;
+}
+
+void TtyReader::save_terminfo()
+{
+    Tcgetattr(tty_fd_, &term_save);
+}
+
+void TtyReader::restore_terminfo()
+{
+    Tcsetattr(tty_fd_, TCSANOW, &term_save);
+    Tcflush(tty_fd_, TCIOFLUSH);
 }
 
 TtyReader::Poller::Poller()

@@ -20,8 +20,10 @@ std::pair<void *, int> IgsmrFileSerializer::serialize(const CollectionData &data
     struct_.data_len = data_len;
     memcpy(struct_.data, data.Data, data_len);
 
+#if 0
 #ifdef DEBUG
     dump_data("write file", (char *) struct_.data, data_len);
+#endif
 #endif
 
     return std::pair<void *, int>(&struct_, data_len+17);
